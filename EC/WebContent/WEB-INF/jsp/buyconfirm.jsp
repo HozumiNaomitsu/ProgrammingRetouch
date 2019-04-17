@@ -39,7 +39,6 @@
 										</tr>
 									</c:forEach>
 									<tr>
-
 										<td class="center">${bdb.deliveryMethodName}</td>
 										<td class="center"></td>
 										<td class="center">${bdb.deliveryMethodPrice}円</td>

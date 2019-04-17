@@ -37,6 +37,8 @@ public class Item extends HttpServlet {
 			request.setAttribute("item", item);
 			request.setAttribute("pageNum", pageNum);
 
+
+
 			request.getRequestDispatcher(EcHelper.ITEM_PAGE).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

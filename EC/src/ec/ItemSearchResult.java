@@ -28,7 +28,6 @@ public class ItemSearchResult extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		try {
-
 			String searchWord = request.getParameter("search_word");
 			//表示ページ番号 未指定の場合 1ページ目を表示
 			int pageNum = Integer.parseInt(request.getParameter("page_num") == null ? "1" : request.getParameter("page_num"));
