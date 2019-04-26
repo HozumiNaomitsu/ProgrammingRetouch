@@ -13,7 +13,7 @@
 		<div class="container">
 			<div class="row center">
 				<div class="input-field col s8 offset-s2 ">
-					<form action="ItemSearchResult">
+					<form action="ItemSearchResult" method="get">
 						<i class="material-icons prefix">search</i> <input type="text" name="search_word" value="${searchWord}">
 					</form>
 				</div>

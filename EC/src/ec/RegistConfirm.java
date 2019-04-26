@@ -29,6 +29,7 @@ public class RegistConfirm extends HttpServlet {
 		/* 文字化け対策 */
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
+		//try・catchを使う理由はこの中でエラーが出たときcatchで受け取ってエラーページにリダイレクトする為。
 		try {
 			String inputUserName = request.getParameter("user_name");
 			String inputUserAddress = request.getParameter("user_address");
@@ -70,6 +71,7 @@ public class RegistConfirm extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			//try・catch内でエラーが出たときここに来る。
 			session.setAttribute("errorMessage", e.toString());
 			response.sendRedirect("Error");
 		}

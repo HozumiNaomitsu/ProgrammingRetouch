@@ -83,13 +83,13 @@ public class BuyDetailDAO {
 		}
 	}
 
-	 /**
-     * 購入IDによる購入詳細情報検索
-     * @param buyId
-     * @return buyDetailItemList ArrayList<ItemDataBeans>
-     *             購入詳細情報のデータを持つJavaBeansのリスト
-     * @throws SQLException
-     */
+	/**
+	* 購入IDによる購入詳細情報検索
+	* @param buyId
+	* @return buyDetailItemList ArrayList<ItemDataBeans>
+	*             購入詳細情報のデータを持つJavaBeansのリスト
+	* @throws SQLException
+	*/
 	public static ArrayList<ItemDataBeans> getItemDataBeansListByBuyId(int buyId) throws SQLException {
 		Connection con = null;
 		PreparedStatement st = null;
@@ -98,12 +98,12 @@ public class BuyDetailDAO {
 
 			st = con.prepareStatement(
 					"SELECT m_item.id,"
-					+ " m_item.name,"
-					+ " m_item.price"
-					+ " FROM t_buy_detail"
-					+ " JOIN m_item"
-					+ " ON t_buy_detail.item_id = m_item.id"
-					+ " WHERE t_buy_detail.buy_id = ?");
+							+ " m_item.name,"
+							+ " m_item.price"
+							+ " FROM t_buy_detail"
+							+ " JOIN m_item"
+							+ " ON t_buy_detail.item_id = m_item.id"
+							+ " WHERE t_buy_detail.buy_id = ?");
 			st.setInt(1, buyId);
 
 			ResultSet rs = st.executeQuery();
@@ -115,7 +115,6 @@ public class BuyDetailDAO {
 				idb.setName(rs.getString("name"));
 				idb.setPrice(rs.getInt("price"));
 
-
 				buyDetailItemList.add(idb);
 			}
 
@@ -125,10 +124,9 @@ public class BuyDetailDAO {
 			System.out.println(e.getMessage());
 			throw new SQLException(e);
 		} finally {
-			if (con != null) {
+		if (con != null) {
 				con.close();
 			}
 		}
 	}
-
 }

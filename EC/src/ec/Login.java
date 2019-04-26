@@ -19,9 +19,12 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		//スコープからデータを取り出す
 		HttpSession session = request.getSession();
 
 		//ログイン失敗時に使用するため
+		//
 		String inputLoginId =session.getAttribute("loginId")!=null?(String) EcHelper.cutSessionAttribute(session,"loginId"):"";
 		String loginErrorMessage = (String)EcHelper.cutSessionAttribute(session, "loginErrorMessage");
 

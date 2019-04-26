@@ -17,6 +17,8 @@
 			</div>
 			<div class="row center">
 				<div class="input-field col s8 offset-s2">
+
+					<!-- formのaction以降にmethodが記載されてない場合はどItemSearchResultのgetが動く。 -->
 					<form action="ItemSearchResult">
 						<i class="material-icons prefix">search</i> <input type="text" name="search_word">
 					</form>

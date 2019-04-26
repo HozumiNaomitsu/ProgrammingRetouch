@@ -24,6 +24,7 @@ public class Cart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		//try・catchを使う理由はこの中でエラーが出たときcatchで受け取ってエラーページにリダイレクトする為。
 		try {
 			ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
 			//セッションにカートがない場合カートを作成
@@ -43,6 +44,7 @@ public class Cart extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			//try・catch内でエラーが出たときここに来る。
 			session.setAttribute("errorMessage", e.toString());
 			response.sendRedirect("Error");
 		}

@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import base.DBManager;
 import beans.BuyDataBeans;
@@ -16,7 +18,6 @@ import beans.BuyDataBeans;
  *
  */
 public class BuyDAO {
-
 
 	/**
 	 * 購入情報登録処理
@@ -63,17 +64,19 @@ public class BuyDAO {
 	 * @throws SQLException
 	 * 				呼び出し元にスローさせるため
 	 */
+
 	public static BuyDataBeans getBuyDataBeansByBuyId(int buyId) throws SQLException {
 		Connection con = null;
 		PreparedStatement st = null;
 		try {
 			con = DBManager.getConnection();
 
-			st = con.prepareStatement(
-					"SELECT * FROM t_buy"
-							+ " JOIN m_delivery_method"
-							+ " ON t_buy.delivery_method_id = m_delivery_method.id"
-							+ " WHERE t_buy.id = ?");
+			String sql = "SELECT * FROM t_buy"
+					+ " JOIN m_delivery_method"
+					+ " ON t_buy.delivery_method_id = m_delivery_method.id"
+					+ " WHERE t_buy.id = ?";
+
+			st = con.prepareStatement(sql);
 			st.setInt(1, buyId);
 
 			ResultSet rs = st.executeQuery();
@@ -100,6 +103,45 @@ public class BuyDAO {
 				con.close();
 			}
 		}
+
+	}
+
+	/**
+	 * ユーザー情報 購入詳細の上
+	 * @param bdb 購入情報
+	 * @throws SQLException 呼び出し元にスローさせるため
+	 */
+	public static List<BuyDataBeans> userData(int userId) throws SQLException {
+		Connection con = null;
+		List<BuyDataBeans> userList = new ArrayList<BuyDataBeans>();
+		try {
+			con = DBManager.getConnection();
+
+			String sql = "SELECT t_buy.id, create_date, name, total_price "
+					+ "FROM t_buy INNER JOIN m_delivery_method ON t_buy.delivery_method_id=m_delivery_method.id "
+					+ "WHERE user_id = ?";
+			PreparedStatement pt = con.prepareStatement(sql);
+			pt.setInt(1, userId);
+			ResultSet rs = pt.executeQuery();
+
+			while (rs.next()) {
+				BuyDataBeans bdb = new BuyDataBeans();
+				bdb.setId(rs.getInt("id"));
+				bdb.setTotalPrice(rs.getInt("total_price"));
+				bdb.setBuyDate(rs.getTimestamp("create_date"));
+				bdb.setDeliveryMethodName(rs.getString("name"));
+				userList.add(bdb);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return userList;
+
 	}
 
 }

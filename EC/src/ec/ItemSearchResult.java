@@ -27,10 +27,23 @@ public class ItemSearchResult extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		//try・catchを使う理由はこの中でエラーが出たときcatchで受け取ってエラーページにリダイレクトする為。
 		try {
+
+			 /*Enter押して表示なのでpostParameter。getParameter,postParameterはrequest.getParameterで取る。
+			  *request.getParameter("search_word")のsearch_wordはitemsearchresult.jspのnameである。
+			  */
 			String searchWord = request.getParameter("search_word");
+
+//			int pageNum;
+//			if(Integer.parseInt(request.getParameter("page_num") == null) {
+//				pageNum = 1;
+//			}else {
+//				pageNum = request.getParameter("page_num");
+//			}
 			//表示ページ番号 未指定の場合 1ページ目を表示
 			int pageNum = Integer.parseInt(request.getParameter("page_num") == null ? "1" : request.getParameter("page_num"));
+
 			// 新たに検索されたキーワードをセッションに格納する
 			session.setAttribute("searchWord", searchWord);
 
@@ -52,6 +65,7 @@ public class ItemSearchResult extends HttpServlet {
 			request.getRequestDispatcher(EcHelper.SEARCH_RESULT_PAGE).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+			//try・catch内でエラーが出たときここに来る。
 			session.setAttribute("errorMessage", e.toString());
 			response.sendRedirect("Error");
 		}

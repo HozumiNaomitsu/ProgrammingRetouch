@@ -26,6 +26,7 @@ public class LoginResult extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		HttpSession session = request.getSession();
+		//try・catchを使う理由はこの中でエラーが出たときcatchで受け取ってエラーページにリダイレクトする為。
 		try {
 			//パラメーターから取得
 			String loginId = request.getParameter("login_id");
@@ -50,6 +51,7 @@ public class LoginResult extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			//try・catch内でエラーが出たときここに来る。
 			session.setAttribute("errorMessage", e.toString());
 			response.sendRedirect("Error");
 		}

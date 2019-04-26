@@ -26,6 +26,7 @@ public class BuyConfirm extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		//try・catchを使う理由はこの中でエラーが出たときcatchで受け取ってエラーページにリダイレクトする為。
 		try {
 			//選択された配送方法IDを取得
 			int inputDeliveryMethodId = Integer.parseInt(request.getParameter("delivery_method_id"));
@@ -51,6 +52,7 @@ public class BuyConfirm extends HttpServlet {
 			request.getRequestDispatcher(EcHelper.BUY_CONFIRM_PAGE).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+			//try・catch内でエラーが出たときここに来る。
 			session.setAttribute("errorMessage", e.toString());
 			response.sendRedirect("Error");
 		}
